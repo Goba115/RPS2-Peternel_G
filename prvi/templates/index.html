@@ -1,12 +1,19 @@
 <!DOCTYPE html>
-<html lang="sl">
+<html>
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="../static/style.css">
-    <title>Document</title>
+<title>My first flask project!</title>
 </head>
 <body>
-    <h1>Pozdravljeni na moji spletni strani</h1>
+
+<h1>My First Template</h1>
+<p>Hello 2.Ri! ♥</p>
+{% if podatki['uspeh'] %}
+<i>Uspešno sem se povezal na database.</i>
+{% else %}
+<i><b>Neuspešno</b> sem se povezal na database.</i>
+{% endif %}
+
+<img src="{{url_for('static', filename='logo.svg')}}" alt="my logo" width="300" height="300">
+
 </body>
 </html>
