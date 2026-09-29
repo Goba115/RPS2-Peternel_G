@@ -5,25 +5,49 @@ from flask import request
 import sqlite3
 
 
-# MY LIBRARIES
-from modules import dbLogic
-
 app = Flask(__name__)
 
 APP_ADDRESS = "0.0.0.0"
 APP_PORT = 8080
+DATABASE_FILE = "lokalna.db"
 
+# povezava na bazo
+conn = sqlite3.connect(DATABASE_FILE)
+cursor = conn.cursor()
+
+#test baze
+def test_baze():
+    conn = sqlite3.connect(DATABASE_FILE)
+    cursor = conn.cursor()
+    cursor.execute(
+        """
+        CREATE TABLE IF NOT EXISTS test 
+        (
+            besedilo TEXT
+        )
+        """)
+    cursor.execute("INSERT INTO test (besedilo) VALUES ('Deluje')")
+    cursor.execute("SELECT * FROM test")
+    rezultati = cursor.fetchall()
+    print("odgovor baze: ")
+    print(rezultati)
+    cursor.execute("drop table test")
+    conn.commit()
+    conn.close()
+    if rezultati:
+        return True
+    else:
+        return False
 # GLAVNI ROUTE APLIKACIJE
 
 @app.route("/", methods = ["GET", "POST"])
 def hello_world():
     data = {
-        "uspeh" : False,
+        "uspeh" : test_baze(),
         "itm" : None,
         "teza" : None,
         "visina" : None
     }
-    data["uspeh"] = dbLogic.getAll()
     if request.method == "POST":
             data["teza"] = request.form.get("teza")
             data["visina"] = request.form.get("visina")

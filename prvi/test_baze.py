@@ -11,24 +11,27 @@ cursor = conn.cursor()
 # Ukaz ustvari tabelo 'test', če ta še ne obstaja.
 # Stolpec 'id' je primarni ključ, ki se samodejno povečuje ob vsakem novem zapisu.
 # Stolpec 'besedilo' shranjuje tekstovne podatke.
-cursor.execute("""
-CREATE TABLE IF NOT EXISTS test 
-    (
-        id INTEGER PRIMARY KEY AUTOINCREMENT, 
-        besedilo TEXT
-    )
-""")
+if False:
+    cursor.execute("""
+    CREATE TABLE IF NOT EXISTS test 
+        (
+            id INTEGER PRIMARY KEY AUTOINCREMENT, 
+            besedilo TEXT
+        )
+    """)
 
 # 3. Vstavljanje podatkov
 # V tabelo 'test' vstavimo novo vrstico z vrednostjo 'Deluje!'.
-cursor.execute("INSERT INTO test (besedilo) VALUES ('Deluje!')")
+
+# cursor.execute("INSERT INTO test (besedilo) VALUES ('Deluje!')")
 
 # Shranimo (potrdimo) vse spremembe v bazi. Brez tega ukaza se podatki ne bi trajno shranili na disk.
-conn.commit()
-
+    conn.commit()
+    cursor.execute("SELECT * FROM test")
+else:
+    cursor.execute("DROP TABLE IF EXISTS test")
 # 4. Branje in izpis podatkov
 # Izberemo vse vrstice in vse stolpce iz tabele 'test'.
-cursor.execute("SELECT * FROM test")
 
 # Metoda fetchall() pridobi vse vrnjene vrstice in jih shrani v obliki seznama naborov (list of tuples).
 rezultati = cursor.fetchall()
