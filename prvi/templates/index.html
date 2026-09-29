@@ -13,7 +13,18 @@
 <i><b>Neuspešno</b> sem se povezal na database.</i>
 {% endif %}
 
-<img src="{{url_for('static', filename='logo.svg')}}" alt="my logo" width="300" height="300">
+
+<form action="/" method="post">
+  <label for="fname">Višina</label><br>
+  <input type="text" id="fname" name="visina" value=""><br>
+  <label for="lname">Teža</label><br>
+  <input type="text" id="lname" name="teza" value=""><br><br>
+  <input type="submit" value="Submit">
+</form> 
+
+{% if podatki['itm'] %}
+<i>Vaš itm je {{podatki['itm']}}</i>
+{% endif %}
 
 </body>
 </html>
