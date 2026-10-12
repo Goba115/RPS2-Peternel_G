@@ -60,8 +60,6 @@ def hello_world():
 def izracun_itm(teza_fun, visina_fun):
     return teza_fun + visina_fun
 
-    
-
 
 # ZAGON APLIKACIJE
 app.config["DEBUG"] = True
