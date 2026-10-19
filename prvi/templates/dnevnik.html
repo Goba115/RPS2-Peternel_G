@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Dnevnik ITM</title>
+</head>
+<body>
+    <!-- Povezava nazaj na domov -->
+    <a href="/">Nazaj na vnos podatkov</a>
+    
+    <h1>Zgodovina meritev</h1>
+    <p>Hello 2.Ri! ♥</p>
+
+    <h3>Vpisani podatki v bazi:</h3>
+    <ul>
+    {% if podatki['vrednosti'] %}
+        {% for vrstica in podatki['vrednosti'] %}
+            <li>
+                <strong>ID:</strong> {{ vrstica[0] }} | 
+                <strong>Čas:</strong> {{ vrstica[1] }} | 
+                <strong>Višina:</strong> {{ vrstica[2] }} cm | 
+                <strong>Teža:</strong> {{ vrstica[3] }} kg | 
+                <strong>ITM:</strong> {{ vrstica[4] }}
+            </li>
+        {% endfor %}
+    {% else %}
+        <li>V bazi še ni shranjenih meritev.</li>
+    {% endif %}
+    </ul>
+</body>
+</html>
