@@ -5,7 +5,8 @@ conn = sqlite3.connect("lokalna.db")
 cursor = conn.cursor()
 
 # 2. Ustvarjanje tabele in vstavljanje podatkov
-if True:
+if False:
+    #cursor.execute("DROP TABLE dnevnik;")
     cursor.execute("""
     CREATE TABLE IF NOT EXISTS dnevnik
         (
@@ -18,17 +19,20 @@ if True:
     """)
     
     # POPRAVEK: Namesto NOW() uporabimo CURRENT_TIMESTAMP
-    cursor.execute("""
-        INSERT INTO dnevnik (datumCas, visina, teza, itm)
-        VALUES (CURRENT_TIMESTAMP, 180, 90, 40);
-    """)
+    #cursor.execute("""
+    #   INSERT INTO dnevnik (datumCas, visina, teza, itm)
+    #  VALUES (CURRENT_TIMESTAMP, 180, 90, 40);
+    #""")
 
     # Shranimo spremembe v bazo
     conn.commit()
     
+
     # Izvedemo poizvedbo
     cursor.execute("SELECT * FROM dnevnik")
 
+cursor.execute("")
+cursor.execute("drop table `dnevnik`")
 # 4. Branje in izpis podatkov
 rezultati = cursor.fetchall()
 
