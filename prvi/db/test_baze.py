@@ -1,7 +1,9 @@
 import sqlite3
 
+DATABASE_FILE = "../lokalna.db"
+
 # 1. Povezovanje z bazo podatkov
-conn = sqlite3.connect("lokalna.db")
+conn = sqlite3.connect(DATABASE_FILE)
 cursor = conn.cursor()
 
 # 2. Ustvarjanje tabele in vstavljanje podatkov
@@ -31,8 +33,17 @@ if False:
     # Izvedemo poizvedbo
     cursor.execute("SELECT * FROM dnevnik")
 
-cursor.execute("")
-cursor.execute("drop table `dnevnik`")
+# cursor.execute("")
+cursor.execute("DROP TABLE IF EXISTS `dnevnik`;")
+cursor.execute("""
+    CREATE TABLE IF NOT EXISTS `dnevnik` (
+        `ID` INTEGER PRIMARY KEY AUTOINCREMENT,
+        `DatumCas` TEXT DEFAULT NULL,
+        `visina` REAL DEFAULT NULL,
+        `teza` REAL DEFAULT NULL,
+        `itm` REAL DEFAULT NULL
+    );
+""")
 # 4. Branje in izpis podatkov
 rezultati = cursor.fetchall()
 
