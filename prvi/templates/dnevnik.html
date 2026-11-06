@@ -2,6 +2,24 @@
 <html>
 <head>
     <title>Dnevnik ITM</title>
+    <style>
+    /* Stil za tabelo in njene celice */
+    table {
+      border-collapse: collapse; /* Združi dvojne robove v enega */
+      width: 50%;                /* Širina tabele */
+      margin-top: 15px;          /* Razmik nad tabelo */
+    }
+    
+    th, td {
+      border: 2px solid #333;    /* Debelina, stil in barva roba */
+      padding: 8px;              /* Prostor znotraj celic */
+      text-align: left;          /* Poravnava besedila */
+    }
+
+    th {
+      background-color: #f2f2f2; /* Barva ozadja za glavo tabele */
+    }
+  </style>
 </head>
 <body>
     <!-- Povezava nazaj na domov -->
@@ -11,20 +29,34 @@
     <p>Hello 2.Ri! ♥</p>
 
     <h3>Vpisani podatki v bazi:</h3>
-    <ul>
     {% if podatki['vrednosti'] %}
+    <p>{{podatki['vrednosti']}}</p>
+    <table>
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>Čas vpisa</th>
+          <th>Višina</th>
+          <th>Teža</th>
+          <th>ITM</th>
+          <th>Izbriši</th>
+        </tr>
+      </thead>
+      <tbody>
         {% for vrstica in podatki['vrednosti'] %}
-            <li>
-                <strong>ID:</strong> {{ vrstica[0] }} | 
-                <strong>Čas:</strong> {{ vrstica[1] }} | 
-                <strong>Višina:</strong> {{ vrstica[2] }} cm | 
-                <strong>Teža:</strong> {{ vrstica[3] }} kg | 
-                <strong>ITM:</strong> {{ vrstica[4] }}
-            </li>
+          <tr>
+            <td>{{ vrstica[0] }}</td>
+            <td>{{ vrstica[1] }}</td>
+            <td>{{ vrstica[2] }} cm</td>
+            <td>{{ vrstica[3] }} kg</td>
+            <td><strong>{{ vrstica[4] }}</strong></td>
+            <td><a href="/izbrisi/{{ vrstica[0] }}">Izbriši</a></td>
+          </tr>
         {% endfor %}
-    {% else %}
-        <li>V bazi še ni shranjenih meritev.</li>
-    {% endif %}
-    </ul>
+      </tbody>
+    </table>
+  {% else %}
+    <p>V bazi še ni shranjenih meritev.</p>
+  {% endif %}
 </body>
 </html>

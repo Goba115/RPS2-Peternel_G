@@ -79,6 +79,21 @@ def stran_dnev():
     }
     return render_template("dnevnik.html", podatki=data)
 
+
+
 if __name__ == "__main__":
     app.config["DEBUG"] = True
     app.run(host=APP_ADDRESS, port=APP_PORT)
+
+
+@app.route("/izbrisi/<int:id_izbira>", methods=["GET"])
+def brisanje_podatkov(id_izbira):
+    # Tukaj začnemo z natanko 4 presledki zamika
+    print(f"Uporabnik želi izbrisati vrstico z ID-jem: {id_izbira}")
+    
+    # Koda za brisanje (tudi ta mora imeti 4 presledke zamika)
+    # ... vaša koda ...
+    
+    # Tudi return mora imeti natanko 4 presledke zamika z leve strani!
+    return redirect("/dnevnik")
+    
