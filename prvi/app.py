@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request
+from flask import Flask, render_template, request, redirect
 import sqlite3
 from datetime import datetime  # Dodano za avtomatski vpis časa
 
@@ -7,6 +7,7 @@ app = Flask(__name__)
 APP_ADDRESS = "0.0.0.0"
 APP_PORT = 8080
 DATABASE_FILE = "lokalna.db"
+URL_DNEVNIK = "http://localhost:"+ str(APP_PORT)+ "/dnevnik"
 
 def test_baze():
     conn = sqlite3.connect(DATABASE_FILE)
@@ -48,6 +49,12 @@ def shrani_v_bazo(visina, teza, itm):
     conn.commit()
     conn.close()
 
+def brisi_iz_baze(id_izbira):
+    conn = sqlite3.connect(DATABASE_FILE)
+    cursor = conn.cursor()
+    cursor.execute(f"delete from dnevnik where ID = {id_izbira}")
+     
+
 def izracun_itm(teza_fun, visina_fun):
     # Popravljena formula: teža / (višina_v_metrih ^ 2)
     # Če vpisuješ višino v cm (npr. 180), jo delimo s 100
@@ -81,19 +88,23 @@ def stran_dnev():
 
 
 
-if __name__ == "__main__":
-    app.config["DEBUG"] = True
-    app.run(host=APP_ADDRESS, port=APP_PORT)
 
 
 @app.route("/izbrisi/<int:id_izbira>", methods=["GET"])
 def brisanje_podatkov(id_izbira):
     # Tukaj začnemo z natanko 4 presledki zamika
     print(f"Uporabnik želi izbrisati vrstico z ID-jem: {id_izbira}")
+    brisi_iz_baze(id_izbira)
+    return redirect(URL_DNEVNIK)
     
     # Koda za brisanje (tudi ta mora imeti 4 presledke zamika)
     # ... vaša koda ...
     
     # Tudi return mora imeti natanko 4 presledke zamika z leve strani!
-    return redirect("/dnevnik")
+
+
+if __name__ == "__main__":
+    app.config["DEBUG"] = True
+    app.run(host=APP_ADDRESS, port=APP_PORT)
+
     
